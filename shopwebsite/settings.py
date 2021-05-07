@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 import dj_database_url
+import django_heroku
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.core.checks import database
 
@@ -134,7 +135,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '/media/')
 # Working SESSION
 CART_SESSION_ID = 'cart'
 
-
+#my settings
+LOGIN_URL='users:login'
+django_heroku.settings(locals())
 # # при інсталяції на heroku
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
