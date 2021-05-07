@@ -1,0 +1,48 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}Your shopping cart{% endblock %}
+{% block content %}
+<h1>Your shopping cart</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Image</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Remove</th>
+        <th>Unit price</th>
+        <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for item in cart %}
+<!--    {{item}}-->
+<!--        {% with product=item.product %}-->
+            {{product}}
+            <tr>
+                <td>
+                    <a href="{% url 'shop:product_detail' id=item.product.id %}">
+                        <img src="{% if item.product.image %}{{ item.product.image.url }}
+                        {% else %}{% static 'img/no_image.jpg' %}{% endif %}">
+                    </a>
+                </td>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td><a href="{% url 'cart:cart_remove' product.id%}">Remove</a></td>
+                <td>${{ item.price }}</td>
+                <td>${{ item.total_price }}</td>
+            </tr>
+<!--        {% endwith %}-->
+    {% endfor %}
+    <tr>
+        <td>Total</td>
+        <td colspan="4"></td>
+        <td>${{ cart.get_total_price }}</td>
+    </tr>
+    </tbody>
+</table>
+<p class="text-right">
+    <a href="{% url 'shop:product_list' %}" class="button light">Continue shopping</a>
+    <a href="{% url 'orders:order_create' %}" class="button">Checkout</a>
+</p>
+{% endblock %}

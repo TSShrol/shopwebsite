@@ -1,0 +1,74 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}
+{% if category %}
+category.name
+{% else %}
+Продукти
+{% endif %}
+{% endblock %}
+{% block content %}
+<div class="col-6 col-md-3">
+    <h6>Категорії</h6>
+    <ul>
+        <li {% if not category %} class="selected" {% endif %}>
+            <a href="{% url 'shop:product_list' %}">Всі</a>
+        </li>
+        {% for cat in categories %}
+        <li>
+            <a href="{{cat.get_absolute_url}}">{{cat.name}}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="col-md-9">
+    <div class="container">
+        <div class="row m-2">
+            {% for product in products %}
+            <div class="col-4">
+                 <div class="card m-2">
+                    <a href="{% url 'shop:product_detail' product.id %}">
+                        <img src="{% if product.image %} {{product.image.url}}{% else%}{% static 'img/no_image.jpg'%}{% endif %}"
+                             class="card-img-top" >
+                    </a>
+
+                    <div class="card-body">
+                        <a href="{% url 'shop:product_detail' product.id %}">
+                            <h5 class="card-title"> {{product.name}}</h5>
+                        </a>
+                        <p class="card-text"> {{product.description}}</p>
+                        <p class="card-text">{{product.price}} грн. </p>
+                        <a href="{% url 'cart:cart_add' product.id %}" class="btn btn-primary">Додати</a>
+                    </div>
+                 </div>
+            </div>
+            {% endfor %}
+
+
+        </div>
+    </div>
+    <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            {% if page.has_previous %}
+            <li class="page-item">
+              <a  href="?page={{page.previous_page_number}}" aria-label="Previous">
+                <span aria-hidden="true">Попередня</span>
+              </a>
+            </li>
+            {% endif%}
+              <li class="page-item">
+                  <span aria-hidden="true">
+                      &nbsp; стор. {{page.number}} із {{page.paginator.num_pages}}&nbsp;
+                  </span>
+              </li>
+            {% if page.has_next %}
+              <li class="page-item">
+              <a  href="?page={{page.next_page_number}}" aria-label="Next">
+                <span aria-hidden="true"> Наступна </span>
+              </a>
+            </li>
+              {% endif%}
+          </ul>
+        </nav>
+</div>
+{% endblock %}
