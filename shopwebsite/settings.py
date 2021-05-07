@@ -11,8 +11,10 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
-
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from django.core.checks import database
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -25,8 +27,7 @@ SECRET_KEY = 'v^*z84!0d&qiu3ses24fs5asa1ttisar+l5vb7o!bx!g_$x$n6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -123,8 +124,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# при інсталяції на heroku
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '/media/')
 
 # Working SESSION
 CART_SESSION_ID = 'cart'
+
+
+# # при інсталяції на heroku
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
