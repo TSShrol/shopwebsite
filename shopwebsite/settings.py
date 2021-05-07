@@ -127,7 +127,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # при інсталяції на heroku
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '/media/')
@@ -138,6 +138,6 @@ CART_SESSION_ID = 'cart'
 #my settings
 LOGIN_URL='users:login'
 django_heroku.settings(locals())
-# # при інсталяції на heroku
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
+# # # при інсталяції на heroku
+# db_from_env = dj_database_url.config()
+# DATABASES['default'].update(db_from_env)
